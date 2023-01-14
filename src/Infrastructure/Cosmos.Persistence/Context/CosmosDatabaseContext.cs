@@ -10,14 +10,8 @@ namespace Cosmos.Persistence.Context
 {
     public class CosmosDatabaseContext: DbContext
     {
-        public CosmosDatabaseContext()
-        {
-
-        }
-        public CosmosDatabaseContext(DbContextOptions<CosmosDatabaseContext> options) : base(options)
-        {
-
-        }
+        public CosmosDatabaseContext(DbContextOptions options) : base(options)
+        { }
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
     }

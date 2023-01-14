@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Cosmos.Domain.Entities
 {
-    public class Category: BaseEntity
+    public class Customer: BaseEntity
     {
-        public string CategoryName { get; set; }
+        public string Name { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
