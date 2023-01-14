@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Cosmos.Application\Cosmos.Application.csproj" />
     <ProjectReference Include="..\..\Core\Cosmos.Domain\Cosmos.Domain.csproj" />
   </ItemGroup>
 
