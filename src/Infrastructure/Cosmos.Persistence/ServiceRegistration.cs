@@ -17,7 +17,7 @@ namespace Cosmos.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services)
         {
-            services.AddDbContext<CosmosDatabaseContext>(options => options.UseNpgsql(Configuration.ConnectionString), ServiceLifetime.Singleton);
+            services.AddDbContext<CosmosDatabaseContext>(options => options.UseNpgsql(Configuration.ConnectionString));
             services.AddScoped<IBookReadRepository, BookReadRepository>();
             services.AddScoped<IBookWriteRepository, BookWriteRepository>();
 

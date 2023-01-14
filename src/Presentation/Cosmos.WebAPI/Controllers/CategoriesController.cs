@@ -1,4 +1,5 @@
 ﻿using Cosmos.Application.Repositories;
+using Cosmos.Domain.Entities;
 using Cosmos.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,16 +10,18 @@ namespace Cosmos.WebAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryReadRepository _categoryReadRepository;
-        private readonly ICategoryWriteRepository _categoryWriteRepository;
+        private readonly  ICategoryReadRepository _categoryReadRepository;
+        private readonly  ICategoryWriteRepository _categoryWriteRepository;
 
-        public CategoriesController(ICategoryReadRepository _categoryReadRepository, ICategoryWriteRepository categoryWriteRepository)
+        public CategoriesController( ICategoryWriteRepository categoryWriteRepository, ICategoryReadRepository categoryReadRepository)
         {
-            _categoryReadRepository = _categoryReadRepository;
+            
             _categoryWriteRepository = categoryWriteRepository;
+            _categoryReadRepository = categoryReadRepository;
         }
+
         [HttpGet]
-        public async void Get()
+        public async Task Get()
         {
             await _categoryWriteRepository.AddRangeAsync(new()
             {
@@ -30,5 +33,13 @@ namespace Cosmos.WebAPI.Controllers
             var count = await _categoryWriteRepository.SaveAsync();
 
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+            Category category = await _categoryReadRepository.GetByIdAsync(id);
+            return Ok(category);
+        }
+
     }
 }
