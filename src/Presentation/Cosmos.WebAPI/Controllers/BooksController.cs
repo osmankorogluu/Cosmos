@@ -1,4 +1,5 @@
 ﻿using Cosmos.Application.Interfaces;
+using Cosmos.Application.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,28 @@ namespace Cosmos.WebAPI.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly IBookService _bookService;
+        private readonly IBookReadRepository _bookReadRepository;
+        private readonly IBookWriteRepository _bookWriteRepository;
 
-        public BooksController(IBookService productService)
+        public BooksController(IBookReadRepository _bookReadRepository, IBookWriteRepository bookWriteRepository)
         {
-            this._bookService = productService;
+            _bookWriteRepository = bookWriteRepository;
+            _bookReadRepository = _bookReadRepository;
         }
-        [HttpGet]
-        public IActionResult GetProducts()
-        {
-            var product = _bookService.GetBooks();
-            return Ok(product);
-        }
+        //[HttpGet]
+        //public async void Get()
+        //{
+        //    await _bookWriteRepository.AddRangeAsync(new()
+        //    {
+        //        new() {Id = Guid.NewGuid(), Name = "Product 1", Price =100, CreateDate = DateTime.UtcNow,Stock=10},
+        //        new() { Id = Guid.NewGuid(), Name = "Product 2", Price =200, CreateDate = DateTime.UtcNow,Stock=10},
+        //        new() { Id = Guid.NewGuid(), Name = "Product 3", Price =300, CreateDate = DateTime.UtcNow,Stock=10},
+        //        new() { Id = Guid.NewGuid(), Name = "Product 4", Price =400, CreateDate = DateTime.UtcNow,Stock=10},
+        //    });
+        //   var count = await _bookWriteRepository.SaveAsync();
+
+
+
+        //}
     }
 }

@@ -28,34 +28,38 @@ namespace Cosmos.Persistence.Repositories
             return entityEntry.State == EntityState.Added;
         }
 
-        public Task<bool> AddRangeAsync(List<T> model)
+        public async Task<bool> AddRangeAsync(List<T> model)
         {
-            throw new NotImplementedException();
+           await Table.AddRangeAsync(model);
+            return true;
         }
 
-        public Task<bool> Remove(List<T> model)
+        public bool Remove(T model)
         {
-            throw new NotImplementedException();
+            EntityEntry<T> entityEntry = entityEntry = Table.Remove(model);
+            return entityEntry.State == EntityState.Deleted;
         }
 
-        public Task<bool> UpdateAsync(T model)
+        public bool RemoveRange(List<T> datas)
         {
-            throw new NotImplementedException();
+            Table.RemoveRange(datas);
+            return true;
+        }
+        public async Task<bool> RemoveAsync(string id)
+        {
+            T model = await Table.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
+            return Remove(model);
         }
 
-        public Task<int> SaveAsync()
+        public bool Update(T model)
         {
-            throw new NotImplementedException();
+           EntityEntry entityEntry = Table.Update(model);
+            return  entityEntry.State == EntityState.Modified;
         }
 
-        public Task<bool> Remove(T model)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<int> SaveAsync()
+         => await _context.SaveChangesAsync();
 
-        public Task<bool> RemoveRange(List<T> datas)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

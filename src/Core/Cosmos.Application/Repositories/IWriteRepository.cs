@@ -14,7 +14,8 @@ namespace Cosmos.Application.Repositories
         Task<bool> AddRangeAsync(List<T> model);
         bool Remove(T model);
         bool RemoveRange(List<T> datas);
-        Task<bool> UpdateAsync(T model);
+        Task<bool> RemoveAsync(string id);
+        bool Update(T model);
 
         Task<int> SaveAsync();
 

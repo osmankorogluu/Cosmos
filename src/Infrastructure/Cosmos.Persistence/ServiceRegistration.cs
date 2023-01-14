@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Cosmos.Persistence.Context;
 using Cosmos.Application.Interfaces;
 using Cosmos.Persistence.Concretes;
+using Cosmos.Application.Repositories;
+using Cosmos.Persistence.Repositories;
 
 namespace Cosmos.Persistence
 {
@@ -15,8 +17,19 @@ namespace Cosmos.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services)
         {
-            services.AddSingleton<IBookService, BookService>();
-            services.AddDbContext<CosmosDatabaseContext>(options => options.UseNpgsql(Configuration.ConnectionString));
+            services.AddDbContext<CosmosDatabaseContext>(options => options.UseNpgsql(Configuration.ConnectionString), ServiceLifetime.Singleton);
+            services.AddScoped<IBookReadRepository, BookReadRepository>();
+            services.AddScoped<IBookWriteRepository, BookWriteRepository>();
+
+            services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
+            services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
+
+            services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+            services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+
+            services.AddScoped<IOrderReadRepository, OrderReadRepository>();
+            services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
+
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Cosmos.Domain.Common;
-using Microsoft.EntityFrameworkCore;
+﻿using Cosmos.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cosmos.Application.Repositories
 {
-    public interface  IRepository<T> where T: BaseEntity
+    public interface ICategoryWriteRepository:IWriteRepository<Category>
     {
-        DbSet<T> Table { get; }
     }
 }
