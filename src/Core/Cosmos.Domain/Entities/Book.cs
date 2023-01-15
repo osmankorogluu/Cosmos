@@ -14,7 +14,7 @@ namespace Cosmos.Domain.Entities
         public int CategoryId { get; set; }
         public string Name { get; set; }
         public string Writer { get; set; }
-        public long Price { get; set; }
+        public float Price { get; set; }
         public int NumberPages { get; set; }
         public int Stock { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
