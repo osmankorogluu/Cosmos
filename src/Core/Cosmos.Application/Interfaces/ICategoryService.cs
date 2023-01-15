@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cosmos.Application.Interfaces
 {
-    internal class ICategoryService
+    public class ICategoryService
     {
     }
 }

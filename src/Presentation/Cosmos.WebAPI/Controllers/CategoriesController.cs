@@ -23,14 +23,17 @@ namespace Cosmos.WebAPI.Controllers
         [HttpGet]
         public async Task Get()
         {
-            await _categoryWriteRepository.AddRangeAsync(new()
-            {
-                new() { CategoryName="Roman"},
-                new() { CategoryName="Bilim Kurgu"},
-                new() { CategoryName="Şiir"},
+            //await _categoryWriteRepository.AddRangeAsync(new()
+            //{
+            //    new() { CategoryName="Roman"},
+            //    new() { CategoryName="Bilim Kurgu"},
+            //    new() { CategoryName="Şiir"},
 
-            });
-            var count = await _categoryWriteRepository.SaveAsync();
+            //});
+            //var count = await _categoryWriteRepository.SaveAsync();
+            Category category = await _categoryReadRepository.GetByIdAsync("3e92a840-921b-4295-a036-5ed59f51c823");
+            category.CategoryName = "Teknolojiiii";
+            await _categoryWriteRepository.SaveAsync();
 
         }
 
