@@ -2,8 +2,8 @@ using Cosmos.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:7013/","https://localhost:7013").AllowAnyHeader().AllowAnyMethod()));
+//Add.services to the container.
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:44332/", "https://localhost:44332").AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddPersistenceServices();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

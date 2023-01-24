@@ -18,7 +18,7 @@ namespace Cosmos.Persistence.Context
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var datas = ChangeTracker
                 .Entries<BaseEntity>();
@@ -27,12 +27,14 @@ namespace Cosmos.Persistence.Context
                 _ = data.State switch
                 {
                     EntityState.Added => data.Entity.CreateDate = DateTime.UtcNow,
-                    EntityState.Modified => data.Entity.UpdateDate = DateTime.UtcNow
+                    EntityState.Modified => data.Entity.UpdateDate = DateTime.UtcNow,
+                    _ => DateTime.UtcNow
 
                 };
             }
+
                 return await base.SaveChangesAsync(cancellationToken);
-            }
+        }
         
     }
 }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cosmos.Persistence.Migrations
 {
     [DbContext(typeof(CosmosDatabaseContext))]
-    [Migration("20230115104634_mig_1")]
+    [Migration("20230122183530_mig_1")]
     partial class mig1
     {
         /// <inheritdoc />

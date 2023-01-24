@@ -19,6 +19,7 @@ namespace Cosmos.Domain.Entities
         public int Stock { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public ICollection<Order> Orders { get; set; }
-        
+
+    
     }
 }
