@@ -15,31 +15,34 @@ namespace Cosmos.WebAPI.Controllers
         private readonly IBookReadRepository _bookReadRepository;
         private readonly IBookWriteRepository _bookWriteRepository;
 
-        public BooksController(IBookReadRepository _bookReadRepository, IBookWriteRepository bookWriteRepository)
+        public BooksController(IBookReadRepository bookReadRepository, IBookWriteRepository bookWriteRepository)
         {
-            _bookWriteRepository = bookWriteRepository;
-            _bookReadRepository = _bookReadRepository;
+            this._bookWriteRepository = bookWriteRepository;
+            this._bookReadRepository = bookReadRepository;
         }
 
         
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_bookReadRepository.GetAll());
+            return Ok (_bookReadRepository.GetAll(false));
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
             return Ok(await _bookReadRepository.GetByIdAsync(id, false));
         }
-
+       
         [HttpPost]
         public async Task<IActionResult> Post(CreateBook book) 
         {
-            _bookWriteRepository.AddAsync(new()
+            await _bookWriteRepository.AddAsync(new()
             {
                 Name = book.Name,
+                Writer = book.Writer,
                 Price = book.Price,
+                NumberPages= book.NumberPages,
                 Stock = book.Stock,
             });
             await _bookWriteRepository.SaveAsync();
@@ -53,9 +56,10 @@ namespace Cosmos.WebAPI.Controllers
             book.Stock = model.Stock;
             book.Price = model.Price;
             book.Name = model.Name;
-           await _bookWriteRepository.SaveAsync();
+            await _bookWriteRepository.SaveAsync();
             return Ok();
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {

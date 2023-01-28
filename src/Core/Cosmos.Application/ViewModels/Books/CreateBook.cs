@@ -9,7 +9,9 @@ namespace Cosmos.Application.ViewModels.Books
     public class CreateBook
     {
         public string Name { get; set; }
-        public int Stock { get; set; }
+        public string Writer { get; set; }
         public float Price { get; set; }
+        public int NumberPages { get; set; }
+        public int Stock { get; set; }
     }
 }

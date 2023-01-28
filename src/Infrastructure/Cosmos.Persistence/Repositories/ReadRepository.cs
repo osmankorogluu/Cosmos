@@ -19,7 +19,7 @@ namespace Cosmos.Persistence.Repositories
         {
             _context = context;
         }
-
+       
         public DbSet<T> Table => _context.Set<T>();
 
         public IQueryable<T> GetAll(bool tracking = true)

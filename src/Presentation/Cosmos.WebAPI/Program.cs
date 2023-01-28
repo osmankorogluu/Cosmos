@@ -3,7 +3,7 @@ using Cosmos.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 //Add.services to the container.
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:60811", "https://localhost:60811")
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:53808", "https://localhost:53808")
 .AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddPersistenceServices();
 builder.Services.AddControllers();

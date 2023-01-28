@@ -9,5 +9,6 @@ namespace Cosmos.Application.Repositories
 {
     public interface IBookReadRepository: IReadRepository<Book>
     {
+
     }
 }
