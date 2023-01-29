@@ -1,8 +1,11 @@
 ﻿using Cosmos.Application.Repositories;
+using Cosmos.Application.ViewModels.Books;
+using Cosmos.Application.ViewModels.Categories;
 using Cosmos.Domain.Entities;
 using Cosmos.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Cosmos.WebAPI.Controllers
 {
@@ -21,28 +24,51 @@ namespace Cosmos.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task Get()
+        public async Task<IActionResult> GetAll()
         {
-            await _categoryWriteRepository.AddRangeAsync(new()
-           {
-                new() { CategoryName="Roman"},
-                new() { CategoryName="Bilim Kurgu"},
-                new() { CategoryName="Şiir"},
-
-            });
-            var count = await _categoryWriteRepository.SaveAsync();
-            //Category category = await _categoryReadRepository.GetByIdAsync("3e92a840-921b-4295-a036-5ed59f51c823");
-            //category.CategoryName = "Teknolojiiii";
-           // await _categoryWriteRepository.SaveAsync();
-
+            return Ok(_categoryReadRepository.GetAll(false));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            Category category = await _categoryReadRepository.GetByIdAsync(id);
-            return Ok(category);
+            return Ok(await _categoryReadRepository.GetByIdAsync(id, false));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateCategory category)
+        {
+            if (ModelState.IsValid)
+            {
+
+
+            }
+            await _categoryWriteRepository.AddAsync(new()
+            {
+                CategoryName= category.CategoryName,
+            });
+            await _categoryWriteRepository.SaveAsync();
+            return StatusCode((int)HttpStatusCode.Created);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateCategory model)
+        {
+            Category category = await _categoryReadRepository.GetByIdAsync(model.Id);
+            category.CategoryName = model.CategoryName;
+           
+            await _categoryWriteRepository.SaveAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _categoryWriteRepository.RemoveAsync(id);
+            await _categoryWriteRepository.SaveAsync();
+            return Ok();
+        }
+
 
     }
 }
