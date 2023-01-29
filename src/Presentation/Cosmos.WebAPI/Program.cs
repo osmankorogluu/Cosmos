@@ -1,12 +1,18 @@
+using Cosmos.Application.Validators.Books;
+using Cosmos.Infrastructure.Filters;
 using Cosmos.Persistence;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Add.services to the container.
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:53808", "https://localhost:53808")
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:55942", "https://localhost:55942")
 .AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddPersistenceServices();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
+
+.AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateBookValidator>())
+.ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

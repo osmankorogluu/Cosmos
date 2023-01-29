@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Cosmos.Infrastructure\Cosmos.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Cosmos.Persistence\Cosmos.Persistence.csproj" />
   </ItemGroup>
 

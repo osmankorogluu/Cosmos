@@ -37,6 +37,11 @@ namespace Cosmos.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreateBook book) 
         {
+            if (ModelState.IsValid)
+            {
+
+
+            }
             await _bookWriteRepository.AddAsync(new()
             {
                 Name = book.Name,
