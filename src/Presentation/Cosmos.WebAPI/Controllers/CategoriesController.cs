@@ -29,14 +29,16 @@ namespace Cosmos.WebAPI.Controllers
             return Ok(_categoryReadRepository.GetAll(false));
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        [HttpGet("{categoryNumber}")]
+        public async Task<IActionResult> Get([FromRoute] string categoryNumber)
         {
-            return Ok(await _categoryReadRepository.GetByIdAsync(id, false));
+            return Ok(await _categoryReadRepository.GetByIdAsync(categoryNumber, false));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateCategory category)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Post([FromRoute] CreateCategory category)
         {
             if (ModelState.IsValid)
             {
@@ -52,7 +54,9 @@ namespace Cosmos.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateCategory model)
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Put([FromRoute] UpdateCategory model)
         {
             Category category = await _categoryReadRepository.GetByIdAsync(model.Id);
             category.CategoryName = model.CategoryName;
@@ -61,10 +65,12 @@ namespace Cosmos.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpDelete("{categoryNumber}")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete([FromRoute] string categoryNumber)
         {
-            await _categoryWriteRepository.RemoveAsync(id);
+            await _categoryWriteRepository.RemoveAsync(categoryNumber);
             await _categoryWriteRepository.SaveAsync();
             return Ok();
         }

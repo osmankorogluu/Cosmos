@@ -28,14 +28,16 @@ namespace Cosmos.WebAPI.Controllers
             return Ok (_bookReadRepository.GetAll(false));
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        [HttpGet("{bookNumber}")]
+        public async Task<IActionResult> Get([FromRoute] string bookNumber)
         {
-            return Ok(await _bookReadRepository.GetByIdAsync(id, false));
+            return Ok(await _bookReadRepository.GetByIdAsync(bookNumber, false));
         }
        
         [HttpPost]
-        public async Task<IActionResult> Post(CreateBook book) 
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Post([FromRoute] CreateBook book) 
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +57,9 @@ namespace Cosmos.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateBook model)
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Put([FromRoute] UpdateBook model)
         {
             Book book = await _bookReadRepository.GetByIdAsync(model.Id);
             book.Stock = model.Stock;
@@ -65,10 +69,12 @@ namespace Cosmos.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpDelete("{bookNumber}")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete([FromRoute] string bookNumber)
         {
-            await _bookWriteRepository.RemoveAsync(id);
+            await _bookWriteRepository.RemoveAsync(bookNumber);
             await _bookWriteRepository.SaveAsync();
             return Ok();
         }
